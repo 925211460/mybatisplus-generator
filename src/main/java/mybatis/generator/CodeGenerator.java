@@ -58,7 +58,7 @@ public class CodeGenerator {
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
         dsc.setUsername("member");
-        dsc.setPassword("Member@123");
+        dsc.setPassword("password");
         mpg.setDataSource(dsc);
 
         // 包配置
