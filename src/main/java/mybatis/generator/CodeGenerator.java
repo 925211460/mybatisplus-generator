@@ -42,7 +42,7 @@ public class CodeGenerator {
         GlobalConfig gc = new GlobalConfig();
         String projectPath = System.getProperty("user.dir");
         gc.setOutputDir(projectPath + "/src/main/java");
-        gc.setAuthor("wangshuzhou");
+        gc.setAuthor("王树洲");
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
         gc.setBaseColumnList(true);
@@ -50,21 +50,22 @@ public class CodeGenerator {
 
         gc.setEntityName("%sEntity");
         gc.setMapperName("%sDao");
+        gc.setFileOverride(true);
         mpg.setGlobalConfig(gc);
 
         // 数据源配置
         DataSourceConfig dsc = new DataSourceConfig();
-        dsc.setUrl("jdbc:mysql://192.168.1.121:3306/uni_ubi_member?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+        dsc.setUrl("jdbc:mysql://192.168.1.121:3306/mem_plugin?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false");
         // dsc.setSchemaName("public");
         dsc.setDriverName("com.mysql.jdbc.Driver");
-        dsc.setUsername("member");
-        dsc.setPassword("password");
+        dsc.setUsername("mem_plugin");
+        dsc.setPassword("uZxNkCjT9@");
         mpg.setDataSource(dsc);
 
         // 包配置
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
-        pc.setParent("com.uni.ubi.modules");
+        pc.setParent("com.hd.plug.meeting");
         mpg.setPackageInfo(pc);
 
         // 自定义配置
@@ -79,7 +80,7 @@ public class CodeGenerator {
         //mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         //String templatePath = "/templates/mapper.xml.ftl";
         //如果模板引擎是 velocity
-        String templatePath = "/templates/mapper.xml.vm";
+        String templatePath = "templates/customMapper.xml.vm";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -89,7 +90,7 @@ public class CodeGenerator {
             public String outputFile(TableInfo tableInfo) {
                 // 自定义输出文件名 ， 如果你 Entity 设置了前后缀、此处注意 xml 的名称会跟着发生变化！！
                 return projectPath + "/src/main/resources/mapper/" + pc.getModuleName()
-                        + "/" + tableInfo.getEntityName() + "Dao" + StringPool.DOT_XML;
+                        + "/" + tableInfo.getEntityName() + StringPool.DOT_XML;
             }
         });
         /*
@@ -114,7 +115,7 @@ public class CodeGenerator {
         // templateConfig.setService();
         // templateConfig.setController();
 
-        templateConfig.setXml(null);
+        templateConfig.setXml(templatePath);
         mpg.setTemplate(templateConfig);
 
         // 策略配置
